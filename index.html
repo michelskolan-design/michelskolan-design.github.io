@@ -1,115 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: white;
-      scroll-behavior: smooth;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    scroll-behavior: smooth;
+  }
 
-    /* HERO SECTION */
-    .hero {
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
+  /* TOP EFFECT BAR */
+  .topbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+  }
 
-    .hero h1 {
-      font-size: 60px;
-      margin: 0;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
-    }
+  .effect-btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    background: white;
+    color: black;
+  }
 
-    .hero p {
-      font-size: 20px;
-      max-width: 600px;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
-    }
+  /* HERO */
+  .hero {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
 
-    /* ARROW */
-    .arrow {
-      position: absolute;
-      bottom: 30px;
-      font-size: 40px;
-      animation: bounce 1.5s infinite;
-      cursor: pointer;
-    }
+  .hero h1 {
+    font-size: 60px;
+    margin: 0;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(10px); }
-    }
+  .hero p {
+    font-size: 20px;
+    max-width: 600px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.6);
+  }
 
-    /* ABOUT SECTION */
-    .about {
-      padding: 80px 20px;
-      background: #111;
-      text-align: center;
-    }
+  .arrow {
+    position: absolute;
+    bottom: 30px;
+    font-size: 40px;
+    animation: bounce 1.5s infinite;
+  }
 
-    .about h2 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
 
-    .about p {
-      max-width: 700px;
-      margin: auto;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #ccc;
-    }
+  /* ABOUT */
+  .about {
+    padding: 100px 20px;
+    background: #111;
+    text-align: center;
+  }
 
-    .btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      background: white;
-      color: black;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+  .about h2 {
+    font-size: 36px;
+  }
 
-    .btn:hover {
-      background: #ddd;
+  .about p {
+    max-width: 700px;
+    margin: auto;
+    color: #ccc;
+    line-height: 1.6;
+  }
+
+  .btn {
+    margin-top: 30px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  /* CELEBRATION ANIMATION */
+  .celebration {
+    position: fixed;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 80px;
+    transition: 0.8s ease;
+    z-index: 2000;
+  }
+
+  .celebration.show {
+    bottom: 40px;
+    transform: translateX(-50%) scale(1.2) rotate(10deg);
+  }
+
+  /* CONFETTI */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: red;
+    top: -10px;
+    animation: fall 2s linear forwards;
+    z-index: 1500;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
     }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>Welcome</h1>
-    <p>We are a creative team based in Stockholm, building simple and beautiful web experiences.</p>
+<!-- TOP BAR -->
+<div class="topbar">
+  <button class="effect-btn" onclick="confetti()">🎆 Effects</button>
+  <button class="effect-btn" onclick="scrollToAbout()">⬇ About</button>
+</div>
 
-    <a href="#about" class="arrow">⬇</a>
-  </div>
+<!-- HERO -->
+<div class="hero">
+  <h1>Welcome</h1>
+  <p>We are a creative team based in Stockholm, building simple and beautiful web experiences.</p>
+  <div class="arrow">⬇</div>
+</div>
 
-  <!-- ABOUT -->
-  <div class="about" id="about">
-    <h2>About Us</h2>
-    <p>
-      We are passionate designers and developers focused on creating clean, modern, and user-friendly websites.
-      Our mission is to bring ideas to life with simple and elegant design.
-    </p>
+<!-- ABOUT -->
+<div class="about" id="about">
+  <h2>About Us</h2>
+  <p>
+    We design modern, clean websites and digital experiences inspired by Scandinavian simplicity.
+  </p>
 
-    <button class="btn" onclick="alert('Thanks for visiting!')">
-      Contact Us
-    </button>
-  </div>
+  <button class="btn" onclick="celebrate()">
+    Contact Us
+  </button>
+</div>
+
+<!-- CELEBRATION ICON -->
+<div class="celebration" id="celebration">⚽</div>
+
+<script>
+function scrollToAbout(){
+  document.getElementById("about").scrollIntoView({behavior:"smooth"});
+}
+
+/* CONFETTI EFFECT */
+function confetti(){
+  for(let i=0;i<30;i++){
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = ["red","blue","yellow","green","white"][Math.floor(Math.random()*5)];
+    c.style.animationDuration = (Math.random()*2+1) + "s";
+    document.body.appendChild(c);
+
+    setTimeout(()=>c.remove(), 3000);
+  }
+}
+
+/* CELEBRATION (SAFE FUN VERSION) */
+function celebrate(){
+  const el = document.getElementById("celebration");
+  el.classList.add("show");
+
+  confetti();
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  }, 1500);
+}
+</script>
 
 </body>
 </html>
